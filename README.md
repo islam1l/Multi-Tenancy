@@ -44,9 +44,13 @@ To get started with our multi-tenancy application, follow these steps:
     LANDLORD_DB_PASSWORD=
     ```
 
-3. **Migration**: Run database migrations to create necessary tables.
+3. **Migration**: Run database migrations. For specific tenant migrations, use the dedicated command:
 
     ```bash
+    # Run migrations for specific tenant (optional: --fresh, --seed)
+    php artisan tenants:migrate {tenant?} {--fresh} {--seed}
+    
+    # Default migrations (for admin access)
     php artisan migrate
     ```
 
