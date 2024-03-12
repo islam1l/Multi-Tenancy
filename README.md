@@ -1,66 +1,70 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Multi-Tenancy Multi-Database Approach App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Welcome to our multi-tenancy multi-database approach application! This app is designed to handle multiple tenants, each with their own database, efficiently. Here's a brief overview of how it works and how to use it.
 
-## About Laravel
+## Introduction
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Our application follows a multi-tenancy architecture, where each tenant has their own dedicated database. This allows us to isolate tenant data and provide a more secure and scalable solution. We achieve this by parsing the tenant from the domain name, dynamically connecting to the appropriate database for each request.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Multi-Tenancy**: Supports multiple tenants, each with their own database.
+- **Dynamic Database Connection**: Connects to the appropriate database based on the request's domain.
+- **User Management**: Allows for the management of users within each tenant.
+- **Order Tracking**: Users can create and track their orders.
+- **Product Management**: Products are associated with orders using a many-to-many relationship.
 
-## Learning Laravel
+## Getting Started
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+To get started with our multi-tenancy application, follow these steps:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Installation**: Clone the repository and install dependencies using Composer.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    ```bash
+    git clone https://github.com/islam1l/Multi-Tenancy.git
+    cd repository
+    composer install
+    ```
 
-## Laravel Sponsors
+2. **Configuration**: Set up your database connections in the `.env` file. Ensure each tenant has a unique database connection. Also, configure the landlord database for administrative tasks.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```dotenv
+    # Tenant Database Variables
+    DB_CONNECTION=tenant
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_USERNAME=root
+    DB_PASSWORD=
 
-### Premium Partners
+    # Landlord Database Variables
+    LANDLORD_DB_HOST=127.0.0.1
+    LANDLORD_DB_PORT=3306
+    LANDLORD_DB_DATABASE=landlord
+    LANDLORD_DB_USERNAME=root
+    LANDLORD_DB_PASSWORD=
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+3. **Migration**: Run database migrations to create necessary tables.
 
-## Contributing
+    ```bash
+    php artisan migrate
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **Usage**: Start the development server and navigate to the appropriate domain for each tenant.
 
-## Code of Conduct
+    ```bash
+    php artisan serve
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Example
 
-## Security Vulnerabilities
+Let's say we have two tenants: Tenant A and Tenant B.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Tenant A's domain: `tenantA.example.com`
+- Tenant B's domain: `tenantB.example.com`
 
-## License
+When a user visits `tenantA.example.com`, the application dynamically connects to Tenant A's database. Similarly, when a user visits `tenantB.example.com`, the application connects to Tenant B's database. This ensures that each tenant's data is isolated and secure.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Conclusion
+
+Our multi-tenancy multi-database approach simplifies the management of multiple tenants while providing a scalable and secure solution. By dynamically connecting to the appropriate database based on the request's domain, we ensure data isolation and flexibility.
